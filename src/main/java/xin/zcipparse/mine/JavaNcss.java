@@ -18,19 +18,42 @@ public class JavaNcss {
 		Element functions = rootElement.element("functions");
 		Iterator<Element> functionListIterator =  functions.elements("function").iterator();
 		int i = 0;
-		
+//		
 		List<String> resultList = new ArrayList<String>();
-		while(functionListIterator.hasNext()){
-			Element function = functionListIterator.next();
-			int ccn = Integer.parseInt(function.element("ccn").getText());
-			
-			
-			if(ccn > 10){
-				String name = function.element("name").getText();
-				if(!resultList.contains(name)){
-					resultList.add(name);
-					System.out.println(name);
-					i++;
+		
+		boolean isfile = true;
+		if(!isfile){
+			//打印出方法
+			while(functionListIterator.hasNext()){
+				Element function = functionListIterator.next();
+				int ccn = Integer.parseInt(function.element("ccn").getText());
+				
+				
+				if(ccn > 10){
+					String name = function.element("name").getText();
+					if(!resultList.contains(name)){
+						resultList.add(name);
+						System.out.println(name);
+						i++;
+					}
+				}
+			}
+		}else{
+			//打印出文件
+			while(functionListIterator.hasNext()){
+				Element fFunctionElement = functionListIterator.next();
+				int ccn = Integer.parseInt(fFunctionElement.element("ccn").getText());
+				
+				if(ccn == 49){
+					String name = fFunctionElement.element("name").getText();
+					String result1 = name.substring(0, name.lastIndexOf("."));
+					String result2 = result1.replace(".", "/");
+					String result3 = ".*/" + result2 + ".java";
+					if(!resultList.contains(result3)){
+						resultList.add(result3);
+						System.out.println(result3);
+						i++;
+					}
 				}
 			}
 		}
